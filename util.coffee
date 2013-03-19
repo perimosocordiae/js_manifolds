@@ -8,15 +8,19 @@
   z = numeric.add(-30, numeric.mul(60, numeric.random([N])))
   return numeric.transpose([x,y,z])
 
-sse_dist = (a,b) -> numeric.sum(numeric.pow(numeric.sub(a,b), 2))
+sse_dist = (a,b) -> numeric.norm2Squared(numeric.sub(a,b))
 
-argsort = (lst) ->
+@argsort = (lst, reverse=false) ->
   n = lst.length
   inds = numeric.linspace(0,n-1,n)
-  inds.sort((a,b) -> lst[a] - lst[b])
+  if reverse
+    inds.sort((a,b) -> lst[b] - lst[a])
+  else
+    inds.sort((a,b) -> lst[a] - lst[b])
 
 @knn = (data, k) ->
   n = data.length
+  # hacky way to get zeros on the diagonal
   dists = numeric.sub(numeric.identity(n), 1)
   for i in [0...n] by 1
     a = data[i]
