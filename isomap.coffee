@@ -37,13 +37,6 @@ mean_center = (X) ->
 mds = (dists, num_dims) ->
   dists = numeric.mul(-0.5, numeric.pow(dists, 2))
   mean_center(dists)
-  {lambda,E} = numeric.eig(dists)
-  # sort by descending eigenvalues
-  order = argsort(lambda.x, true).slice(0, num_dims)
-  # take num_dims eigenvectors
-  coords = []
-  for i in [0...dists.length]
-    coords.push pt = []
-    for o in order
-      pt.push E.x[i][o] * 50
-  return coords
+  [lambda,E] = hotelling_deflation(dists, num_dims, 100, 1e-12, 3)
+  console.log E.length, E[0].length
+  return numeric.mul 50, numeric.transpose(E)

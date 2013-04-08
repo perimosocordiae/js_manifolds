@@ -1,4 +1,4 @@
-numeric = require './vendor/numeric-1.2.6.min.js'
+window.numeric = require './vendor/numeric-1.2.6.min.js' if require?
 
 @power_method = (A, x, maxiter, epsilon, teststeps) ->
   m  = A.length
@@ -66,7 +66,7 @@ outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
     numeric.addeq A, numeric.mul max_eigenvalue, numeric.div xxT, xTx
   return [vals,vecs]
 
-if require.main == module
+if module? and require?.main == module
   A = [[4,-1,1],[-1,3,-2],[1,-2,3]]
   [lambdas, vecs] = @hotelling_deflation(A, 3, 100, 1e-12, 3)
   console.log lambdas

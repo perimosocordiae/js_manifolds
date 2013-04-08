@@ -2,6 +2,7 @@
 <script type='text/javascript' src='vendor/three.min.js'></script>
 <script type='text/javascript' src='vendor/numeric-1.2.6.min.js'></script>
 <script type='text/javascript' src='util.js'></script>
+<script type='text/javascript' src='power_method.js'></script>
 <script type='text/javascript' src='isomap.js'></script>
 <script type='text/javascript' src='scatterplot.js'></script>
 <script type='text/javascript'>
@@ -79,10 +80,10 @@ function render(obj, parent_elt, size) {
   <tr><th>Original Space</th><th>Neighbor Graph</th><th>Embedded w/ Isomap</th></tr>
   <tr><td id='orig'></td><td id='nng'></td><td id='emb'></td></tr>
   <tr><td>
-    # Points: <input type='number' min=3 max=3000 value=10 id=numPoints />
+    # Points: <input type='number' min=3 max=3000 value=300 id=numPoints />
     <button onclick='resetSwissRoll()'>Recalc</button>
   </td><td>
-    # Neighbors: <input type='number' min=1 max=20 value=2 id=knn />
+    # Neighbors: <input type='number' min=1 max=20 value=3 id=knn />
     <button onclick='resetKNN()'>Recalc</button>
   </td><td>
 
