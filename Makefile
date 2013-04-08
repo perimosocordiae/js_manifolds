@@ -20,6 +20,6 @@ clean:
 manifolds.js: $(JS_SRC)
 	cat $+ >$@
 
-manifold.min.js: manifolds.js
+manifolds.min.js: manifolds.js
 	uglifyjs -o $@ $<
 
