@@ -5,75 +5,7 @@
 <script type='text/javascript' src='power_method.js'></script>
 <script type='text/javascript' src='isomap.js'></script>
 <script type='text/javascript' src='scatterplot.js'></script>
-<script type='text/javascript'>
-// globals
-var data;
-
-window.onload = function() {
-  resetSwissRoll();
-}
-
-function resetSwissRoll() {
-  var n = Number(document.getElementById('numPoints').value);
-  data = swiss_roll(n);
-  render(scatter(data), document.getElementById('orig'), 400);
-  setTimeout(function(){
-    resetKNN();
-  }, 0);
-}
-
-function resetKNN() {
-  var k = Number(document.getElementById('knn').value);
-  var result = knn(data, k);
-  var nn_inds = result[0];
-  var dists = result[1];
-  render(scatter(data, nn_inds), document.getElementById('nng'), 400);
-  setTimeout(function(){
-    embedded_data = isomap(nn_inds, dists, 2);
-    render(scatter(embedded_data), document.getElementById('emb'), 400);
-  }, 0);
-}
-
-function render(obj, parent_elt, size) {
-  parent_elt.innerHTML = '';
-  var renderer = new THREE.WebGLRenderer({antialias: true});
-  renderer.setSize(size, size);
-  parent_elt.appendChild(renderer.domElement);
-  renderer.setClearColorHex(0xEEEEEE, 1.0);
-  renderer.clear();
-  // new THREE.PerspectiveCamera( FOV, viewAspectRatio, zNear, zFar );
-  var camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
-  camera.position.z = 150;
-
-  var scene = new THREE.Scene();
-  scene.add(obj);
-  renderer.render(scene, camera);
-
-  var down = false;
-  var sx = 0, sy = 0;
-  parent_elt.onmousedown = function (ev){
-    down = true; sx = ev.clientX; sy = ev.clientY;
-  };
-  parent_elt.onmouseup = function(){ down = false; };
-  parent_elt.onmousemove = function(ev) {
-    if (down) {
-      var dx = ev.clientX - sx;
-      var dy = ev.clientY - sy;
-      obj.rotation.y += dx*0.01;
-      camera.position.y += dy;
-      sx += dx;
-      sy += dy;
-    }
-  }
-  function animate() {
-    renderer.clear();
-    camera.lookAt(scene.position);
-    renderer.render(scene, camera);
-    window.requestAnimationFrame(animate, renderer.domElement);
-  };
-  animate();
-}
-</script>
+<script type='text/javascript' src='main.js'></script>
 </head>
 <body>
 <table>
@@ -85,9 +17,9 @@ function render(obj, parent_elt, size) {
   </td><td>
     # Neighbors: <input type='number' min=1 max=20 value=3 id=knn />
     <button onclick='resetKNN()'>Recalc</button>
-  </td><td>
-
-  </td></tr>
+  </td>
+  <td></td>
+  </tr>
 </table>
 </body>
 </html>
