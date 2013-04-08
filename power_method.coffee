@@ -33,7 +33,7 @@ window.numeric = require './vendor/numeric-1.2.6.min.js' if require?
 outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
 
 # note: only for symmetric matrices
-@hotelling_deflation = (A, num_vecs, maxiter, epsilon, teststeps) ->
+@hotelling_deflation = (A, num_vecs, maxiter, epsilon, teststeps) =>
   x0 = numeric.rep([A.length], 1)
   vals = []
   vecs = []
@@ -51,7 +51,7 @@ outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
     numeric.subeq A, numeric.mul val, xxT
   return [vals, vecs]
 
-@mca = (A, num_vecs, maxiter, epsilon, teststeps) ->
+@mca = (A, num_vecs, maxiter, epsilon, teststeps) =>
   x0 = numeric.rep([A.length], 1)
   max_eigenvalue = @power_method(A, x0, maxiter, epsilon, teststeps)[0] + epsilon
   vals = []
@@ -76,3 +76,4 @@ if module? and require?.main == module
   [lambdas, vecs] = @mca(A, 3, 100, 1e-12, 3)
   console.log lambdas
   console.log numeric.transpose(vecs)
+
