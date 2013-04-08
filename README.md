@@ -17,7 +17,7 @@ To install both, `npm install -g coffee-script uglifyjs`.
     make dev
     open index.html
     
-# TODO List
+## TODO List
 
  * Detect disconnected components and handle them more nicely
    * Current implementation blows up with `NaN`s
