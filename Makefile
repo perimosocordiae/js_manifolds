@@ -13,7 +13,7 @@ JS_SRC = vendor/three.min.js \
 
 .PHONY: dist dev clean
 dev: $(JS_SRC)
-dist: manifold.min.js
+dist: manifolds.min.js
 clean:
 	rm -f *.js
 
