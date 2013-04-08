@@ -2,6 +2,8 @@
 
 Bringing the interactivity and accessibility of the web to Manifold Learning.
 
+Live demo is up [on my UMass website](http://people.cs.umass.edu/~ccarey/demos/).
+
 ## Dependencies
 
  * Coffeescript
