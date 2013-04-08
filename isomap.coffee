@@ -34,9 +34,10 @@ mean_center = (X) ->
       X[i][j] -= row_means[i] + col_means[j] - X_mean
   return X
 
-mds = (dists, num_dims) ->
+mds = (dists, num_dims, axis_scale=50) ->
   dists = numeric.mul(-0.5, numeric.pow(dists, 2))
   mean_center(dists)
   [lambda,E] = hotelling_deflation(dists, num_dims, 100, 1e-12, 3)
-  console.log E.length, E[0].length
-  return numeric.mul 50, numeric.transpose(E)
+  for i in [0...num_dims]
+    numeric.muleq(E[i], axis_scale / numeric.norminf(E[i]))
+  return numeric.transpose(E)
