@@ -39,8 +39,11 @@ outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
   x0 = numeric.rep([A.length], 1)
   vals = []
   vecs = []
-  for i in [0...num_vecs] by 1
-    [val,vec] = power_method(A, x0, maxiter, epsilon, teststeps)
+  for i in [1..num_vecs] by 1
+    [val,vec] = @power_method(A, x0, maxiter, epsilon, teststeps)
+    vals.push val
+    vecs.push vec
+    break if i is num_vecs
     xxT = outer_product vec, vec
     # xTx = numeric.dotVV vec, vec
     # Note: I've seen a couple variations of the following line:
@@ -48,13 +51,11 @@ outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
     #   A -= val / xTx * xxT
     #   A -= xxT * A * xxT
     numeric.subeq A, numeric.mul val, xxT
-    vals.push val
-    vecs.push vec
   return [vals, vecs]
 
 
 if require.main == module
   A = [[4,-1,1],[-1,3,-2],[1,-2,3]]
-  [lambdas, vecs] = hotelling_deflation(A, 3, 100, 1e-12, 3)
+  [lambdas, vecs] = @hotelling_deflation(A, 3, 100, 1e-12, 3)
   console.log lambdas
   console.log numeric.transpose(vecs)
