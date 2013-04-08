@@ -1,7 +1,5 @@
 numeric = require './vendor/numeric-1.2.6.min.js'
 
-# TODO: find a method for getting the first k _smallest_ eigenpairs
-
 @power_method = (A, x, maxiter, epsilon, teststeps) ->
   m  = A.length
   for n in [0...maxiter]
@@ -53,9 +51,28 @@ outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
     numeric.subeq A, numeric.mul val, xxT
   return [vals, vecs]
 
+@mca = (A, num_vecs, maxiter, epsilon, teststeps) ->
+  x0 = numeric.rep([A.length], 1)
+  max_eigenvalue = @power_method(A, x0, maxiter, epsilon, teststeps)[0] + epsilon
+  vals = []
+  vecs = []
+  for i in [1..num_vecs] by 1
+    [val,vec] = @inverse_power_method(A, x0, maxiter, epsilon, teststeps)
+    vals.push val
+    vecs.push vec
+    break if i is num_vecs
+    xxT = outer_product vec, vec
+    xTx = numeric.dotVV vec, vec
+    numeric.addeq A, numeric.mul max_eigenvalue, numeric.div xxT, xTx
+  return [vals,vecs]
 
 if require.main == module
   A = [[4,-1,1],[-1,3,-2],[1,-2,3]]
   [lambdas, vecs] = @hotelling_deflation(A, 3, 100, 1e-12, 3)
+  console.log lambdas
+  console.log numeric.transpose(vecs)
+  console.log '------------------'
+  A = [[4,-1,1],[-1,3,-2],[1,-2,3]]
+  [lambdas, vecs] = @mca(A, 3, 100, 1e-12, 3)
   console.log lambdas
   console.log numeric.transpose(vecs)
