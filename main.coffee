@@ -23,7 +23,6 @@ render = (obj, parent_elt, size) ->
     renderer.clear()
     camera.lookAt scene.position
     renderer.render scene, camera
-    window.requestAnimationFrame animate, renderer.domElement
   parent_elt.innerHTML = ""
   renderer = new THREE.WebGLRenderer(antialias: true)
   renderer.setSize size, size
@@ -54,6 +53,7 @@ render = (obj, parent_elt, size) ->
     camera.position.y += dy
     sx += dx
     sy += dy
+    animate()
 
   animate()
 
