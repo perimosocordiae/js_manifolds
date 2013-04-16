@@ -8,6 +8,14 @@
     for j in nns
       row[j] = dists[i][j]
     row[i] = 0
+  # hacky symmetrization
+  for i in [0...n] by 1
+    for j in [0...n] by 1
+      tmp = geodesic[j][i] is Infinity
+      if geodesic[i][j] is Infinity
+        geodesic[i][j] = geodesic[j][i] unless tmp
+      else
+        geodesic[j][i] = geodesic[i][j] if tmp
   # fill out matrix with shortest path distances
   floyd_warshall(geodesic)
   # do classical MDS
