@@ -5,6 +5,7 @@ JS_SRC = vendor/three.min.js \
          util.js \
          power_method.js \
          isomap.js \
+         laplacian_eigenmaps.js \
          scatterplot.js \
          main.js
 

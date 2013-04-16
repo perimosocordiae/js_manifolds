@@ -10,11 +10,14 @@
   render scatter(data, nn_inds), document.getElementById("nng"), 400
   setTimeout (->
     embedded_data = isomap(nn_inds, dists, 2)
-    render scatter(embedded_data), document.getElementById("emb"), 400
+    render scatter(embedded_data), document.getElementById("isomap"), 400
+  ), 0
+  setTimeout (->
+    embedded_data = lapeig(dists, 2)
+    render scatter(embedded_data), document.getElementById("lapeig"), 400
   ), 0
 
 render = (obj, parent_elt, size) ->
-  
   # new THREE.PerspectiveCamera( FOV, viewAspectRatio, zNear, zFar );
   animate = ->
     renderer.clear()

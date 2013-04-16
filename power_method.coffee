@@ -1,4 +1,5 @@
-window.numeric = require './vendor/numeric-1.2.6.min.js' if require?
+root = exports ? this
+root.numeric = require './vendor/numeric-1.2.6.min.js' if require?
 
 @power_method = (A, x, maxiter, epsilon, teststeps) ->
   m  = A.length
@@ -34,7 +35,7 @@ outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
 
 # note: only for symmetric matrices
 @hotelling_deflation = (A, num_vecs, maxiter, epsilon, teststeps) =>
-  x0 = numeric.rep([A.length], 1)
+  x0 = numeric.random([A.length])
   vals = []
   vecs = []
   for i in [1..num_vecs] by 1
@@ -52,8 +53,8 @@ outer_product = (xs,ys) -> ((x*y for x in xs) for y in ys)
   return [vals, vecs]
 
 @mca = (A, num_vecs, maxiter, epsilon, teststeps) =>
-  x0 = numeric.rep([A.length], 1)
-  max_eigenvalue = @power_method(A, x0, maxiter, epsilon, teststeps)[0] + epsilon
+  x0 = numeric.random([A.length])
+  max_eigenvalue = @power_method(A, x0, maxiter, epsilon, teststeps)[0] + 2*epsilon
   vals = []
   vecs = []
   for i in [1..num_vecs] by 1

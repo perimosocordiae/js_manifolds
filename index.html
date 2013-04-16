@@ -4,13 +4,14 @@
 <script type='text/javascript' src='util.js'></script>
 <script type='text/javascript' src='power_method.js'></script>
 <script type='text/javascript' src='isomap.js'></script>
+<script type='text/javascript' src='laplacian_eigenmaps.js'></script>
 <script type='text/javascript' src='scatterplot.js'></script>
 <script type='text/javascript' src='main.js'></script>
 </head>
 <body>
 <table>
-  <tr><th>Original Space</th><th>Neighbor Graph</th><th>Embedded w/ Isomap</th></tr>
-  <tr><td id='orig'></td><td id='nng'></td><td id='emb'></td></tr>
+  <tr><th>Original Space</th><th>Neighbor Graph</th></tr>
+  <tr><td id='orig'></td><td id='nng'></td></tr>
   <tr><td>
     # Points: <input type='number' min=3 max=3000 value=300 id=numPoints />
     <button onclick='resetSwissRoll()'>Recalc</button>
@@ -18,8 +19,9 @@
     # Neighbors: <input type='number' min=1 max=20 value=3 id=knn />
     <button onclick='resetKNN()'>Recalc</button>
   </td>
-  <td></td>
   </tr>
+  <tr><th>Embedded w/ Isomap</th><th>Embedded w/ Laplacian Eigenmaps</th></tr>
+  <tr><td id='isomap'></td><td id='lapeig'></td></tr>
 </table>
 </body>
 </html>
