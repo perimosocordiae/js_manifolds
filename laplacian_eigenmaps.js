@@ -1,10 +1,4 @@
 (function() {
-  var root = typeof exports !== "undefined" && exports !== null ? exports : this;
-
-  if (typeof require !== "undefined" && require !== null) {
-    root.numeric = require('./vendor/numeric-1.2.6.min.js');
-    root.mca = require('./power_method').mca;
-  }
 
   function _comb_graph_laplacian(dists) {
     var L = numeric.mul(dists, -1);
@@ -36,7 +30,7 @@
       axis_scale = 50;
     }
     var L = _normed_graph_laplacian(dists);
-    var tmp = root.mca(L, num_dims + 1, 100, 1e-12, 3),
+    var tmp = mca(L, num_dims + 1, 100, 1e-12, 3),
         lambda = tmp[0],
         E = tmp[1];
     var start_idx = 0;
