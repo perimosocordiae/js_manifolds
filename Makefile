@@ -9,14 +9,11 @@ JS_SRC = vendor/three.min.js \
          scatterplot.js \
          main.js
 
-%.js: %.coffee
-	coffee -c $<
-
 .PHONY: dist dev clean
 dev: $(JS_SRC)
 dist: manifolds.min.js
 clean:
-	rm -f *.js
+	rm -f manifolds.js manifolds.min.js
 
 manifolds.js: $(JS_SRC)
 	cat $+ >$@
