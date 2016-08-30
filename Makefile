@@ -24,3 +24,5 @@ manifolds.js: $(JS_SRC)
 manifolds.min.js: manifolds.js
 	uglifyjs -o $@ $<
 
+vendor/three.min.js:
+	curl https://cdnjs.cloudflare.com/ajax/libs/three.js/r80/three.min.js >$@

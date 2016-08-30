@@ -27,7 +27,7 @@ render = (obj, parent_elt, size) ->
   renderer = new THREE.WebGLRenderer(antialias: true)
   renderer.setSize size, size
   parent_elt.appendChild renderer.domElement
-  renderer.setClearColorHex 0xEEEEEE, 1.0
+  renderer.setClearColor 0xEEEEEE, 1.0
   renderer.clear()
   camera = new THREE.PerspectiveCamera(45, 1, 1, 10000)
   camera.position.z = 150
