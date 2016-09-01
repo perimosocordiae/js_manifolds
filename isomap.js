@@ -10,7 +10,7 @@
 
   function floyd_warshall(dists) {
     var n = dists.nr, n1 = n-1, data = dists.data;
-    var k, i, j, d, di, dj, dk, dik;
+    var k, i, j, d, di, dk, dik;
     for (k = 0; k < n; k++) {
       dk = dists.row(k);
       for (i = 0; i < n1; i++) {
@@ -29,7 +29,7 @@
   };
 
   function mean_center_sym(X) {
-    var i, j, row, n = X.nr;
+    var i, j, n = X.nr;
     // symmetric matrix means row_means == col_means
     var row_means = new Float32Array(n);
     for (i = 0; i < n; i++) {

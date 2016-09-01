@@ -305,7 +305,7 @@ window.numeric = (function() {
   };
 
   this.LU = function(M) {
-    var i, j, k, Pk, n = M.nr, n1 = n-1;
+    var i, j, k, Pk, n = M.nr;
     var P = new Int32Array(n);
     var A = numeric.clone(M),
         Adata = A.data;
@@ -351,7 +351,7 @@ window.numeric = (function() {
         P = LUP.P,
         x = new Float32Array(b),
         n = LU.nr;
-    var i, j, Pi, LUi, LUii, tmp;
+    var i, j, Pi, LUi, tmp;
     for (i = 0; i < n; ++i) {
       Pi = P[i];
       if (Pi !== i) {
