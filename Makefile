@@ -1,7 +1,6 @@
 
 # Order matters!
-JS_SRC = vendor/three.min.js \
-         numeric.js \
+JS_SRC = numeric.js \
          util.js \
          power_method.js \
          isomap.js \
@@ -9,17 +8,13 @@ JS_SRC = vendor/three.min.js \
          scatterplot.js \
          main.js
 
-.PHONY: dist dev clean
-dev: $(JS_SRC)
+.PHONY: dist clean
 dist: manifolds.min.js
 clean:
-	rm -f manifolds.js manifolds.min.js
+	rm -f manifolds.min.js
 
-manifolds.js: $(JS_SRC)
-	cat $+ >$@
-
-manifolds.min.js: manifolds.js
-	uglifyjs -o $@ $<
+manifolds.min.js: $(JS_SRC) vendor/three.min.js
+	uglifyjs $(JS_SRC) -mc | cat vendor/three.min.js - >$@
 
 vendor/three.min.js:
 	curl https://cdnjs.cloudflare.com/ajax/libs/three.js/r80/three.min.js >$@
