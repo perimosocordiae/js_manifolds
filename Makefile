@@ -1,7 +1,7 @@
 
 # Order matters!
 JS_SRC = vendor/three.min.js \
-         vendor/numeric-1.2.6.min.js \
+         numeric.js \
          util.js \
          power_method.js \
          isomap.js \

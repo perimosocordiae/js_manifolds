@@ -1,48 +1,40 @@
 (function() {
 
-  function _comb_graph_laplacian(dists) {
-    var L = numeric.mul(dists, -1);
-    var n = dist.length;
-    for (var i = 0; i < n; i++) {
-      L[i][i] = numeric.sum(dists[i]) + 1e-10;
-    }
-    return L;
+  this.lapeig = function(nn_inds, dists, num_dims) {
+    var L = adj_matrix(nn_inds, dists);
+    // convert to normalized graph laplacian in-place
+    laplacian(L);
+    // run minor components analysis
+    var vecs = mca(L, num_dims, 100, 1e-12, 3, 1e-6);
+    return numeric.transpose(vecs);
   };
 
-  function _normed_graph_laplacian(dists) {
-    var n = dists.length;
-    var d = [];
+  function laplacian(adj) {
+    var i, j, n = adj.nr;
+    var d = new Float32Array(n);
+    var x, row;
     for (i = 0; i < n; i++) {
-      d.push(Math.sqrt(numeric.sum(dists[i])))
-    }
-    var L = numeric.clone(dists);
-    for (i = 0; i < n; i++) {
+      row = adj.row(i);
+      x = 0;
       for (j = 0; j < n; j++) {
-        L[i][j] /= -d[i] * d[j];
+        if (row[j] < Infinity) {
+          x += row[j];
+        }
       }
-      L[i][i] = 1;
+      d[i] = Math.sqrt(x);
     }
-    return L;
-  };
-
-  this.lapeig = function(dists, num_dims, axis_scale) {
-    if (axis_scale == null) {
-      axis_scale = 50;
-    }
-    var L = _normed_graph_laplacian(dists);
-    var tmp = mca(L, num_dims + 1, 100, 1e-12, 3),
-        lambda = tmp[0],
-        E = tmp[1];
-    var start_idx = 0;
-    for (var i = 0; i <= num_dims; i++) {
-      if (lambda[i] < 1e-6) {
-        start_idx++;
-        continue;
+    for (i = 0; i < n; i++) {
+      row = adj.row(i);
+      x = -d[i];
+      for (j = 0; j < n; j++) {
+        if (row[j] < Infinity) {
+          row[j] /= x * d[j];
+        } else {
+          row[j] = 0;
+        }
       }
-      numeric.muleq(E[i], axis_scale / numeric.norminf(E[i]));
+      row[i] = 1;
     }
-    E.splice(0, start_idx);
-    return numeric.transpose(E);
   };
 
 }).call(this);

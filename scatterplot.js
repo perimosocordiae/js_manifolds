@@ -50,11 +50,11 @@
     if (nn_inds == null) {
       scatterPlot.add(axes(-50, 50, -50, 50, -50, 50));
     }
-    var mat = new THREE.PointsMaterial({ vertexColors: true, size: 2 });
+    var mat = new THREE.PointsMaterial({ vertexColors: true, size: 3 });
     var pointGeo = new THREE.Geometry();
-    var i, n = data.length;
+    var i, n = data.nr;
     for (i = 0; i < n; i++) {
-      pointGeo.vertices.push(va(data[i]));
+      pointGeo.vertices.push(va(data.row(i)));
       pointGeo.colors.push(colormap(i / n));
     }
     var points = new THREE.Points(pointGeo, mat);
@@ -66,11 +66,11 @@
     var lineMat = new THREE.LineBasicMaterial({ color: 0x808080 });
     var s_pt, t_pt, nns, j, neighbor, lineGeo;
     for (i = 0; i < n; i++) {
-      s_pt = va(data[i]);
+      s_pt = va(data.row(i));
       nns = nn_inds[i];
       for (j = 0; j < nns.length; j++) {
         neighbor = nns[j];
-        t_pt = va(data[neighbor]);
+        t_pt = va(data.row(neighbor));
         lineGeo = new THREE.Geometry();
         lineGeo.vertices.push(s_pt, t_pt);
         scatterPlot.add(new THREE.Line(lineGeo, lineMat));
