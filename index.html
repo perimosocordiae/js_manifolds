@@ -1,4 +1,7 @@
+<!doctype html>
 <html><head>
+<meta charset="UTF-8">
+<title>JS Manifolds demo page</title>
 <script type='text/javascript' src='vendor/three.min.js'></script>
 <script type='text/javascript' src='numeric.js'></script>
 <script type='text/javascript' src='util.js'></script>
@@ -22,6 +25,8 @@
   </tr>
   <tr><th>Embedded w/ Isomap</th><th>Embedded w/ Laplacian Eigenmaps</th></tr>
   <tr><td id='isomap'></td><td id='lapeig'></td></tr>
+  <tr><td><button onclick='resetIsomap()'>Recalc</button></td>
+      <td><button onclick='resetLapeig()'>Recalc</button></td></tr>
 </table>
 </body>
 </html>
